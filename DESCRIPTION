@@ -1,0 +1,18 @@
+Package: MoreThemes
+Type: Package
+Title: Additional Themes for ggplot2
+Version: 0.1.0
+Authors@R: 
+    person("Thomas", "Massie", , "thomas.massie@outlook.com", role = c("aut", "cre"))
+Maintainer: Thomas Massie <thomas.massie@outlook.com>
+Description: A collection of additional themes for ggplot2 visualizations.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ggplot2 (>= 3.0.0),
+    grid
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.3.2
