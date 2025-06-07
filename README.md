@@ -1,27 +1,30 @@
 <img src="/assets/MoreThemes_HexLogo_QuicksandRegular400.png" align="right" height="139"/><br><br><br>
-
 # MoreThemes
-
 Additional themes for ggplot2 visualizations.
-
 ## Installation
-
 You can install the development version of MoreThemes from GitHub:
-
 ```r
 # install.packages("devtools")
 devtools::install_github("thomassie/MoreThemes")
 ```
+## Available Themes
 
-## Usage
+The package currently includes two themes:
 
-The package currently includes `theme_more_light_01()`:
+### 1. `theme_more_light_01()`
+A customizable light theme with warm tones and flexible grid options.
 
+### 2. `theme_more_light_02()`
+A clean, minimal theme with subtle gray backgrounds and right-positioned legends.
+
+## Usage Examples
+
+### Using theme_more_light_01
 ```r
 library(ggplot2)
 library(MoreThemes)
 
-# Basic usage
+# Basic usage with warm background
 ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
   geom_point(size = 3) +
   labs(
@@ -48,20 +51,36 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   )
 ```
 
-## Features
+### Using theme_more_light_02
+```r
+# Clean minimal style with light gray background
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  theme_more_light_02() +
+  labs(title = "Fuel Efficiency by Weight",
+       x = "Weight (1000 lbs)",
+       y = "Miles per Gallon")
 
-The `theme_more_light_01()` function provides:
+# Bar chart with the minimal theme
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
+  geom_bar() +
+  theme_more_light_02() +
+  labs(title = "Distribution of Cylinders",
+       x = "Number of Cylinders",
+       y = "Count") +
+  scale_fill_brewer(palette = "Set2", guide = "none")
+```
 
-- Clean, minimalist design
-- Customizable background and grid colors
-- Adjustable font sizes for different elements
-- Option to show/hide major and minor grid lines
-- Professional typography with bold titles
-- Top-positioned horizontal legend by default
+## Theme Features
+
+### theme_more_light_01
+- Warm, customizable background colors (default: #EDE9DE)
+- Flexible grid line options (major and minor)
+- Top-positioned horizontal legend
+- Bold titles with adjustable sizes
 - Subtle facet strip styling
 
-## Parameters
-
+**Parameters:**
 - `base_size`: Base font size (default: 12)
 - `base_family`: Base font family (default: "sans")
 - `grid_color`: Color of grid lines (default: "#D8D2C2")
@@ -71,10 +90,19 @@ The `theme_more_light_01()` function provides:
 - `show_grid_major`: Show major grid lines (default: TRUE)
 - `show_grid_minor`: Show minor grid lines (default: FALSE)
 
-## Contributing
+### theme_more_light_02
+- Clean, minimalist design with light gray background (#f8f8f8)
+- Very subtle grid lines for unobtrusive data focus
+- Right-positioned legend with bold text
+- No subtitle or caption for maximum simplicity
+- Gray axis text and titles for reduced visual weight
 
+**Parameters:**
+- `base_size`: Base font size (default: 11)
+- `base_family`: Base font family (default: "")
+
+## Contributing
 Feel free to submit issues, fork the repository, and create pull requests to add more themes!
 
 ## License
-
 MIT License
