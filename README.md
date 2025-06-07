@@ -10,12 +10,12 @@ You can install the development version of MoreThemes from GitHub:
 
 ```r
 # install.packages("devtools")
-devtools::install_github("yourusername/MoreThemes")
+devtools::install_github("thomassie/MoreThemes")
 ```
 
 ## Usage
 
-The package currently includes `theme_fivethirtyeight_variant()`, a customizable variation of the FiveThirtyEight theme:
+The package currently includes `theme_more_light_01()`:
 
 ```r
 library(ggplot2)
@@ -31,7 +31,7 @@ ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
     y = "Miles per Gallon",
     color = "Cylinders"
   ) +
-  theme_fivethirtyeight_variant()
+  theme_more_light_01()
 
 # Customized version with white background
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
@@ -40,7 +40,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
     title = "Iris Dataset: Sepal Dimensions",
     subtitle = "Length vs Width by Species"
   ) +
-  theme_fivethirtyeight_variant(
+  theme_more_light_01(
     base_size = 14,
     background_color = "white",
     grid_color = "grey85",
@@ -50,9 +50,9 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
 
 ## Features
 
-The `theme_fivethirtyeight_variant()` function provides:
+The `theme_more_light_01()` function provides:
 
-- Clean, minimalist design inspired by FiveThirtyEight
+- Clean, minimalist design
 - Customizable background and grid colors
 - Adjustable font sizes for different elements
 - Option to show/hide major and minor grid lines
@@ -64,8 +64,8 @@ The `theme_fivethirtyeight_variant()` function provides:
 
 - `base_size`: Base font size (default: 12)
 - `base_family`: Base font family (default: "sans")
-- `grid_color`: Color of grid lines (default: "grey90")
-- `background_color`: Panel background color (default: "grey95")
+- `grid_color`: Color of grid lines (default: "#D8D2C2")
+- `background_color`: Panel background color (default: "#EDE9DE")
 - `title_size`: Title font size multiplier (default: 1.2)
 - `axis_title_size`: Axis title size multiplier (default: 0.9)
 - `show_grid_major`: Show major grid lines (default: TRUE)
