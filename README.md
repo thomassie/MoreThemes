@@ -1,4 +1,4 @@
-<img src="/assets/MoreThemes_HexLogo_QuicksandRegular400.png" align="right" height="139"/><br><br>
+<img src="/assets/MoreThemes_HexLogo_QuicksandRegular400.png" align="right" height="139"/><br><br><br>
 
 # MoreThemes
 
