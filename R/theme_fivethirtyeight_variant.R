@@ -1,13 +1,116 @@
+# ===== File: R/zzz.R =====
+# This file handles package loading and font registration
+
+.onLoad <- function(libname, pkgname) {
+  # Load and register Nunito Sans font when package is loaded
+  if (requireNamespace("showtext", quietly = TRUE)) {
+    tryCatch({
+      showtext::font_add_google("Nunito Sans", "Nunito Sans")
+      showtext::showtext_auto()
+      packageStartupMessage("Nunito Sans font loaded successfully")
+    }, error = function(e) {
+      packageStartupMessage("Could not load Nunito Sans font: ", e$message)
+      packageStartupMessage("Theme will fall back to system sans font")
+    })
+  } else {
+    packageStartupMessage("showtext package not available. Install with: install.packages('showtext')")
+    packageStartupMessage("Theme will use system sans font")
+  }
+}
+
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage("Package loaded. Nunito Sans font should now be available for themes.")
+}
+
+# ===== File: R/font-helpers.R =====
+# Helper functions for font management
+
+#' Check if Nunito Sans font is available
+#'
+#' This function checks whether the Nunito Sans font has been successfully
+#' loaded and is available for use in ggplot2 themes.
+#'
+#' @return Logical value indicating if Nunito Sans font is available
+#' @export
+#'
+#' @examples
+#' # Check font availability
+#' if (check_nunito_font()) {
+#'   message("Nunito Sans is available!")
+#' } else {
+#'   message("Nunito Sans is not available, using fallback font")
+#' }
+check_nunito_font <- function() {
+  if (requireNamespace("showtext", quietly = TRUE)) {
+    return("Nunito Sans" %in% names(showtext::font_families()))
+  }
+  return(FALSE)
+}
+
+#' Force reload Nunito Sans font
+#'
+#' Attempts to reload the Nunito Sans font from Google Fonts.
+#' Useful if the font failed to load during package startup.
+#'
+#' @return Logical value indicating success of font loading
+#' @export
+#'
+#' @examples
+#' # Manually reload font if needed
+#' if (!check_nunito_font()) {
+#'   reload_nunito_font()
+#' }
+reload_nunito_font <- function() {
+  if (!requireNamespace("showtext", quietly = TRUE)) {
+    message("showtext package not available. Install with: install.packages('showtext')")
+    return(FALSE)
+  }
+
+  tryCatch({
+    showtext::font_add_google("Nunito Sans", "Nunito Sans")
+    showtext::showtext_auto()
+    message("Nunito Sans font reloaded successfully")
+    return(TRUE)
+  }, error = function(e) {
+    message("Could not reload Nunito Sans font: ", e$message)
+    return(FALSE)
+  })
+}
+
+#' Get available font family for theme
+#'
+#' Internal helper function that returns the appropriate font family
+#' to use in the theme, with fallback logic.
+#'
+#' @param preferred_font Character string of preferred font family
+#' @return Character string of font family to use
+#' @keywords internal
+get_theme_font <- function(preferred_font = "Nunito Sans") {
+  if (preferred_font == "Nunito Sans") {
+    if (check_nunito_font()) {
+      return("Nunito Sans")
+    } else {
+      warning("Nunito Sans font not available. Using system sans font instead. Try reload_nunito_font() to reload the font.")
+      return("sans")
+    }
+  }
+  return(preferred_font)
+}
+
+# ===== File: R/theme-fivethirtyeight-variant.R =====
+# Main theme function with robust font handling
+
 #' FiveThirtyEight Theme Variant
 #'
 #' A variation of the FiveThirtyEight theme with customizable options
-#' for ggplot2 charts. This theme features a light gray background,
-#' minimal grid lines, and a clean, modern appearance.
+#' for ggplot2 charts. This theme features a warm beige background,
+#' minimal grid lines, and uses Nunito Sans font for a clean, modern appearance.
+#' The Nunito Sans font is automatically loaded when the package is loaded.
 #'
 #' @param base_size base font size, default is 12
-#' @param base_family base font family, default is "sans"
-#' @param grid_color color of grid lines, default is "grey90"
-#' @param background_color background color, default is "grey95"
+#' @param base_family base font family, default is "Nunito Sans"
+#' @param grid_color color of grid lines, default is "#D8D2C2"
+#' @param background_color background color, default is "#EDE9DE"
 #' @param title_size title font size multiplier, default is 1.2
 #' @param axis_title_size axis title size multiplier, default is 0.9
 #' @param show_grid_major logical, show major grid lines, default is TRUE
@@ -19,6 +122,9 @@
 #' @examples
 #' library(ggplot2)
 #'
+#' # Check if font is available
+#' check_nunito_font()
+#'
 #' # Basic usage
 #' ggplot(mtcars, aes(x = wt, y = mpg)) +
 #'   geom_point() +
@@ -29,23 +135,31 @@
 #'   geom_point() +
 #'   theme_fivethirtyeight_variant(
 #'     base_size = 14,
-#'     grid_color = "grey80",
-#'     background_color = "white"
+#'     grid_color = "#B8B0A0",
+#'     background_color = "#F5F2E8"
 #'   )
+#'
+#' # Using different font
+#' ggplot(mtcars, aes(x = wt, y = mpg)) +
+#'   geom_point() +
+#'   theme_fivethirtyeight_variant(base_family = "Arial")
 #'
 #' @import ggplot2
 #' @import grid
 theme_fivethirtyeight_variant <- function(base_size = 12,
-                                          base_family = "sans",
-                                          grid_color = "grey90",
-                                          background_color = "grey95",
+                                          base_family = "Nunito Sans",
+                                          grid_color = "#D8D2C2",
+                                          background_color = "#EDE9DE",
                                           title_size = 1.2,
                                           axis_title_size = 0.9,
                                           show_grid_major = TRUE,
                                           show_grid_minor = FALSE) {
 
+  # Use helper function to get appropriate font
+  actual_font <- get_theme_font(base_family)
+
   # Start with theme_bw as base
-  theme_bw(base_size = base_size, base_family = base_family) +
+  theme_bw(base_size = base_size, base_family = actual_font) +
     theme(
       # Panel settings
       panel.background = element_rect(fill = background_color, color = NA),
