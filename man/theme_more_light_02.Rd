@@ -4,12 +4,33 @@
 \alias{theme_more_light_02}
 \title{A Light Minimal Theme for ggplot2}
 \usage{
-theme_more_light_02(base_size = 11, base_family = "")
+theme_more_light_02(
+  base_size = 11,
+  base_family = "",
+  grid_color = "#e0e0e0",
+  background_color = "#f8f8f8",
+  title_size = 1.3,
+  axis_title_size = 1,
+  show_grid_major = TRUE,
+  show_grid_minor = FALSE
+)
 }
 \arguments{
 \item{base_size}{base font size, given in pts.}
 
 \item{base_family}{base font family}
+
+\item{grid_color}{color of grid lines, default is "#E0E0E0"}
+
+\item{background_color}{background color, default is "#F8F8F8"}
+
+\item{title_size}{title font size multiplier, default is 1.3}
+
+\item{axis_title_size}{axis title size multiplier, default is 1}
+
+\item{show_grid_major}{logical, show major grid lines, default is TRUE}
+
+\item{show_grid_minor}{logical, show minor grid lines, default is FALSE}
 }
 \value{
 A ggplot2 theme object

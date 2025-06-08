@@ -6,6 +6,12 @@
 #'
 #' @param base_size base font size, given in pts.
 #' @param base_family base font family
+#' @param grid_color color of grid lines, default is "#E0E0E0"
+#' @param background_color background color, default is "#F8F8F8"
+#' @param title_size title font size multiplier, default is 1.3
+#' @param axis_title_size axis title size multiplier, default is 1
+#' @param show_grid_major logical, show major grid lines, default is TRUE
+#' @param show_grid_minor logical, show minor grid lines, default is FALSE
 #'
 #' @return A ggplot2 theme object
 #' @export
@@ -30,12 +36,19 @@
 #'        x = "Number of Cylinders",
 #'        y = "Count")
 #'
-theme_more_light_02 <- function(base_size = 11, base_family = "") {
+theme_more_light_02 <- function(base_size = 11,
+                                base_family = "",
+                                grid_color = "#e0e0e0",
+                                background_color = "#f8f8f8",
+                                title_size = 1.3,
+                                axis_title_size = 1,
+                                show_grid_major = TRUE,
+                                show_grid_minor = FALSE) {
   theme_minimal(base_size = base_size, base_family = base_family) +
     theme(
       # Plot background - light gray
-      plot.background = element_rect(fill = "#f8f8f8", color = NA),
-      panel.background = element_rect(fill = "#f8f8f8", color = NA),
+      plot.background = element_rect(fill = background_color, color = NA),
+      panel.background = element_rect(fill = background_color, color = NA),
 
       # Grid lines - very subtle gray
       panel.grid.major = element_line(color = "#e0e0e0", size = 0.3, linetype = "solid"),
@@ -48,13 +61,13 @@ theme_more_light_02 <- function(base_size = 11, base_family = "") {
                                  margin = margin(t = 8)),
       axis.text.y = element_text(color = "#999999", size = rel(0.9),
                                  margin = margin(r = 8)),
-      axis.title.x = element_text(color = "#999999", size = rel(1),
+      axis.title.x = element_text(color = "#999999", size = rel(axis_title_size),
                                   margin = margin(t = 12)),
-      axis.title.y = element_text(color = "#999999", size = rel(1),
+      axis.title.y = element_text(color = "#999999", size = rel(axis_title_size),
                                   margin = margin(r = 12), angle = 90),
 
       # Plot title - bold black, left-aligned
-      plot.title = element_text(color = "#000000", size = rel(1.3), face = "bold",
+      plot.title = element_text(color = "#000000", size = rel(title_size), face = "bold",
                                 margin = margin(b = 20), hjust = 0),
 
       # No subtitle for this style

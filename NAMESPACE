@@ -2,5 +2,6 @@
 
 export(theme_more_light_01)
 export(theme_more_light_02)
+export(theme_more_light_03)
 import(ggplot2)
 import(grid)
