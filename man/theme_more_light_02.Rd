@@ -51,12 +51,18 @@ ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
        x = "Weight (1000 lbs)",
        y = "Miles per Gallon")
 
-# Bar chart
+# Bar chart with no grid lines
 ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
   geom_bar() +
-  theme_more_light_02() +
+  theme_more_light_02(show_grid_major = FALSE) +
   labs(title = "Distribution of Cylinders",
        x = "Number of Cylinders",
        y = "Count")
+
+# Plot with minor grid lines
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  theme_more_light_02(show_grid_minor = TRUE, grid_color = "#d0d0d0") +
+  labs(title = "MPG vs Weight")
 
 }

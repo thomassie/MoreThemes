@@ -75,7 +75,7 @@ ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
   labs(title = "Distribution of Cylinders",
        x = "Number of Cylinders",
        y = "Count") +
-  scale_fill_brewer(palette = "Set2", guide = "none")
+  scale_fill_brewer(palette = "Set1", guide = "none")
 ```
 
 ### Using theme_more_light_03
@@ -88,8 +88,13 @@ ggplot(mtcars, aes(x = factor(cyl))) +
 
 # Time series with impactful styling
 ggplot(economics, aes(x = date, y = unemploy/1000)) +
-  geom_line(color = "#e74c3c", size = 1.5) +
-  theme_more_light_03() +
+  geom_line(color = "#e74c3c", linewidth = 1.5) +
+  theme_more_light_03(
+    base_size = 14,
+    background_color = "white",
+    grid_color = "grey85",
+    show_grid_minor = TRUE
+  ) +
   labs(title = "US Unemployment Over Time (thousands)")
 ```
 

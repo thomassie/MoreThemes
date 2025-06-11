@@ -28,13 +28,19 @@
 #'        x = "Weight (1000 lbs)",
 #'        y = "Miles per Gallon")
 #'
-#' # Bar chart
+#' # Bar chart with no grid lines
 #' ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
 #'   geom_bar() +
-#'   theme_more_light_02() +
+#'   theme_more_light_02(show_grid_major = FALSE) +
 #'   labs(title = "Distribution of Cylinders",
 #'        x = "Number of Cylinders",
 #'        y = "Count")
+#'
+#' # Plot with minor grid lines
+#' ggplot(mtcars, aes(x = wt, y = mpg)) +
+#'   geom_point() +
+#'   theme_more_light_02(show_grid_minor = TRUE, grid_color = "#d0d0d0") +
+#'   labs(title = "MPG vs Weight")
 #'
 theme_more_light_02 <- function(base_size = 11,
                                 base_family = "",
@@ -44,15 +50,29 @@ theme_more_light_02 <- function(base_size = 11,
                                 axis_title_size = 1,
                                 show_grid_major = TRUE,
                                 show_grid_minor = FALSE) {
+
+  # Define grid elements based on parameters
+  grid_major_element <- if (show_grid_major) {
+    element_line(color = grid_color, size = 0.3, linetype = "solid")
+  } else {
+    element_blank()
+  }
+
+  grid_minor_element <- if (show_grid_minor) {
+    element_line(color = grid_color, size = 0.15, linetype = "solid")
+  } else {
+    element_blank()
+  }
+
   theme_minimal(base_size = base_size, base_family = base_family) +
     theme(
-      # Plot background - light gray
+      # Plot background - using background_color parameter
       plot.background = element_rect(fill = background_color, color = NA),
       panel.background = element_rect(fill = background_color, color = NA),
 
-      # Grid lines - very subtle gray
-      panel.grid.major = element_line(color = "#e0e0e0", size = 0.3, linetype = "solid"),
-      panel.grid.minor = element_blank(),
+      # Grid lines - using the conditional elements
+      panel.grid.major = grid_major_element,
+      panel.grid.minor = grid_minor_element,
 
       # Axes - clean minimal styling
       axis.line = element_blank(),
@@ -66,7 +86,7 @@ theme_more_light_02 <- function(base_size = 11,
       axis.title.y = element_text(color = "#999999", size = rel(axis_title_size),
                                   margin = margin(r = 12), angle = 90),
 
-      # Plot title - bold black, left-aligned
+      # Plot title - using title_size parameter
       plot.title = element_text(color = "#000000", size = rel(title_size), face = "bold",
                                 margin = margin(b = 20), hjust = 0),
 

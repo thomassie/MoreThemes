@@ -28,17 +28,23 @@
 #'   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
 #'   labs(title = "Miles per Gallon by Car Model")
 #'
-#' # Time series
+#' # Time series with custom background
 #' ggplot(economics, aes(x = date, y = unemploy/1000)) +
 #'   geom_line(color = "#e74c3c", size = 1.5) +
-#'   theme_more_light_03() +
+#'   theme_more_light_03(background_color = "#fafafa", grid_color = "#e0e0e0") +
 #'   labs(title = "US Unemployment Over Time (thousands)")
 #'
-#' # Scatter plot
+#' # Scatter plot with no grid
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
 #'   geom_point(color = "#2ecc71", size = 3, alpha = 0.7) +
-#'   theme_more_light_03() +
+#'   theme_more_light_03(show_grid_major = FALSE) +
 #'   labs(title = "Iris Sepal Dimensions")
+#'
+#' # Plot with minor grid lines
+#' ggplot(mtcars, aes(x = wt, y = mpg)) +
+#'   geom_point(size = 3) +
+#'   theme_more_light_03(show_grid_minor = TRUE) +
+#'   labs(title = "Fuel Efficiency by Weight")
 #'
 theme_more_light_03 <- function(base_size = 11,
                                 base_family = "",
@@ -48,17 +54,34 @@ theme_more_light_03 <- function(base_size = 11,
                                 axis_title_size = 0.7,
                                 show_grid_major = TRUE,
                                 show_grid_minor = FALSE) {
+
+  # Define grid elements based on parameters
+  grid_major_element <- if (show_grid_major) {
+    element_line(color = grid_color, linewidth = 0.5, linetype = "solid")
+  } else {
+    element_blank()
+  }
+
+  grid_minor_element <- if (show_grid_minor) {
+    element_line(color = grid_color, linewidth = 0.25, linetype = "solid")
+  } else {
+    element_blank()
+  }
+
+  # Note: axis_title_size is included but won't have visible effect since axis.title = element_blank()
+  # This is intentional as per the theme description stating "no axis titles"
+
   theme_minimal(base_size = base_size, base_family = base_family) +
     theme(
-      # Plot background
-      plot.background = element_rect(fill = "#f5f5f5", color = NA),
-      panel.background = element_rect(fill = "#f5f5f5", color = NA),
+      # Plot background - using background_color parameter
+      plot.background = element_rect(fill = background_color, color = NA),
+      panel.background = element_rect(fill = background_color, color = NA),
 
-      # Grid lines
-      panel.grid.major = element_line(color = "#d0d0d0", linewidth = 0.5, linetype = "solid"),
-      panel.grid.minor = element_blank(),
-      panel.grid.major.x = element_line(color = "#d0d0d0", linewidth = 0.5),
-      panel.grid.major.y = element_line(color = "#d0d0d0", linewidth = 0.5),
+      # Grid lines - using conditional elements and grid_color parameter
+      panel.grid.major = grid_major_element,
+      panel.grid.minor = grid_minor_element,
+      panel.grid.major.x = grid_major_element,
+      panel.grid.major.y = grid_major_element,
 
       # Axes
       axis.line = element_blank(),
@@ -67,13 +90,13 @@ theme_more_light_03 <- function(base_size = 11,
                                  margin = margin(t = 8)),
       axis.text.y = element_text(color = "#666666", size = rel(0.91),
                                  margin = margin(r = 8)),
-      axis.title = element_blank(),
+      axis.title = element_blank(),  # Intentionally blank as per theme description
 
-      # Plot title
-      plot.title = element_text(color = "#2d2d2d", size = rel(1.64), face = "bold",
+      # Plot title - using title_size parameter
+      plot.title = element_text(color = "#2d2d2d", size = rel(title_size), face = "bold",
                                 margin = margin(b = 20), hjust = 0),
 
-      # Legend
+      # Legend - hidden as per theme description
       legend.position = "none",
 
       # Panel border

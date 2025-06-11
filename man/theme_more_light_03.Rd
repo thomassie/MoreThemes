@@ -51,16 +51,22 @@ ggplot(mtcars, aes(x = rownames(mtcars), y = mpg)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(title = "Miles per Gallon by Car Model")
 
-# Time series
+# Time series with custom background
 ggplot(economics, aes(x = date, y = unemploy/1000)) +
   geom_line(color = "#e74c3c", size = 1.5) +
-  theme_more_light_03() +
+  theme_more_light_03(background_color = "#fafafa", grid_color = "#e0e0e0") +
   labs(title = "US Unemployment Over Time (thousands)")
 
-# Scatter plot
+# Scatter plot with no grid
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point(color = "#2ecc71", size = 3, alpha = 0.7) +
-  theme_more_light_03() +
+  theme_more_light_03(show_grid_major = FALSE) +
   labs(title = "Iris Sepal Dimensions")
+
+# Plot with minor grid lines
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(size = 3) +
+  theme_more_light_03(show_grid_minor = TRUE) +
+  labs(title = "Fuel Efficiency by Weight")
 
 }
