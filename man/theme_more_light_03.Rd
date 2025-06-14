@@ -10,6 +10,7 @@ theme_more_light_03(
   grid_color = "#d0d0d0",
   background_color = "#f5f5f5",
   title_size = 1.6,
+  subtitle_size = 1.1,
   axis_title_size = 0.7,
   show_grid_major = TRUE,
   show_grid_minor = FALSE
@@ -25,6 +26,8 @@ theme_more_light_03(
 \item{background_color}{background color, default is "#F5F5F5"}
 
 \item{title_size}{title font size multiplier, default is 1.6}
+
+\item{subtitle_size}{subtitle font size multiplier, default is 1.1}
 
 \item{axis_title_size}{axis title size multiplier, default is 0.7}
 
@@ -63,10 +66,11 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   theme_more_light_03(show_grid_major = FALSE) +
   labs(title = "Iris Sepal Dimensions")
 
-# Plot with minor grid lines
+# Plot with minor grid lines and custom subtitle size
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(size = 3) +
-  theme_more_light_03(show_grid_minor = TRUE) +
-  labs(title = "Fuel Efficiency by Weight")
+  theme_more_light_03(show_grid_minor = TRUE, subtitle_size = 0.9) +
+  labs(title = "Fuel Efficiency by Weight",
+       subtitle = "Relationship between car weight and miles per gallon")
 
 }

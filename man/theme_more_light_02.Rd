@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme_more_light_02.R
 \name{theme_more_light_02}
 \alias{theme_more_light_02}
-\title{A Light Minimal Theme for ggplot2}
+\title{A Clean Minimal Theme for ggplot2}
 \usage{
 theme_more_light_02(
   base_size = 11,
@@ -10,6 +10,7 @@ theme_more_light_02(
   grid_color = "#e0e0e0",
   background_color = "#f8f8f8",
   title_size = 1.3,
+  subtitle_size = 1.1,
   axis_title_size = 1,
   show_grid_major = TRUE,
   show_grid_minor = FALSE
@@ -20,11 +21,13 @@ theme_more_light_02(
 
 \item{base_family}{base font family}
 
-\item{grid_color}{color of grid lines, default is "#E0E0E0"}
+\item{grid_color}{color of grid lines, default is "#e0e0e0"}
 
-\item{background_color}{background color, default is "#F8F8F8"}
+\item{background_color}{background color, default is "#f8f8f8"}
 
 \item{title_size}{title font size multiplier, default is 1.3}
+
+\item{subtitle_size}{subtitle font size multiplier, default is 1.1}
 
 \item{axis_title_size}{axis title size multiplier, default is 1}
 
@@ -36,33 +39,37 @@ theme_more_light_02(
 A ggplot2 theme object
 }
 \description{
-This theme provides a clean, light aesthetic with subtle gray backgrounds
-and minimal visual elements. It features a light gray background (#f8f8f8),
-very subtle grid lines, and clean typography with right-positioned legends.
+This theme provides a clean, professional aesthetic with subtle gray colors,
+minimal grid lines, and clear typography. Features a very light gray background
+(#f8f8f8), subtle grid lines, and includes axis titles and legend. Perfect for
+professional reports and publications where clarity and readability are key.
 }
 \examples{
 library(ggplot2)
 
-# Basic scatter plot
-ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
-  geom_point(size = 3) +
+# Scatter plot with axis titles
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(size = 3, alpha = 0.7) +
   theme_more_light_02() +
   labs(title = "Fuel Efficiency by Weight",
-       x = "Weight (1000 lbs)",
-       y = "Miles per Gallon")
+       subtitle = "Data from 1974 Motor Trend magazine",
+       x = "Weight (1000 lbs)", y = "Miles per Gallon")
 
-# Bar chart with no grid lines
-ggplot(mtcars, aes(x = factor(cyl), fill = factor(cyl))) +
-  geom_bar() +
-  theme_more_light_02(show_grid_major = FALSE) +
-  labs(title = "Distribution of Cylinders",
-       x = "Number of Cylinders",
-       y = "Count")
+# Bar chart with legend
+ggplot(mtcars, aes(x = factor(cyl), fill = factor(gear))) +
+  geom_bar(position = "dodge") +
+  theme_more_light_02() +
+  labs(title = "Car Count by Cylinders and Gears",
+       x = "Number of Cylinders", y = "Count")
 
-# Plot with minor grid lines
-ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point() +
-  theme_more_light_02(show_grid_minor = TRUE, grid_color = "#d0d0d0") +
-  labs(title = "MPG vs Weight")
+# Custom colors and sizing
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point(aes(color = Species), size = 3) +
+  theme_more_light_02(background_color = "#fafafa",
+                      title_size = 1.5,
+                      subtitle_size = 0.9) +
+  labs(title = "Iris Sepal Dimensions",
+       subtitle = "Measurements by species",
+       x = "Sepal Length (cm)", y = "Sepal Width (cm)")
 
 }

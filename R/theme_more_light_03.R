@@ -10,6 +10,7 @@
 #' @param grid_color color of grid lines, default is "#D0D0D0"
 #' @param background_color background color, default is "#F5F5F5"
 #' @param title_size title font size multiplier, default is 1.6
+#' @param subtitle_size subtitle font size multiplier, default is 1.1
 #' @param axis_title_size axis title size multiplier, default is 0.7
 #' @param show_grid_major logical, show major grid lines, default is TRUE
 #' @param show_grid_minor logical, show minor grid lines, default is FALSE
@@ -40,17 +41,19 @@
 #'   theme_more_light_03(show_grid_major = FALSE) +
 #'   labs(title = "Iris Sepal Dimensions")
 #'
-#' # Plot with minor grid lines
+#' # Plot with minor grid lines and custom subtitle size
 #' ggplot(mtcars, aes(x = wt, y = mpg)) +
 #'   geom_point(size = 3) +
-#'   theme_more_light_03(show_grid_minor = TRUE) +
-#'   labs(title = "Fuel Efficiency by Weight")
+#'   theme_more_light_03(show_grid_minor = TRUE, subtitle_size = 0.9) +
+#'   labs(title = "Fuel Efficiency by Weight",
+#'        subtitle = "Relationship between car weight and miles per gallon")
 #'
 theme_more_light_03 <- function(base_size = 11,
                                 base_family = "",
                                 grid_color = "#d0d0d0",
                                 background_color = "#f5f5f5",
                                 title_size = 1.6,
+                                subtitle_size = 1.1,
                                 axis_title_size = 0.7,
                                 show_grid_major = TRUE,
                                 show_grid_minor = FALSE) {
@@ -94,7 +97,11 @@ theme_more_light_03 <- function(base_size = 11,
 
       # Plot title - using title_size parameter
       plot.title = element_text(color = "#2d2d2d", size = rel(title_size), face = "bold",
-                                margin = margin(b = 20), hjust = 0),
+                                margin = margin(b = 10), hjust = 0),
+
+      # Plot subtitle - using subtitle_size parameter
+      plot.subtitle = element_text(color = "#666666", size = rel(subtitle_size),
+                                   margin = margin(t = 0, b = 15), hjust = 0),
 
       # Legend - hidden as per theme description
       legend.position = "none",
